@@ -2,7 +2,10 @@
 {
     public interface IGenericRepository<T> where T : IEntity
     {
-        T? GetById(int id);
-        List<T> List();
+        Task<T?> GetByIdAsync(int id);
+        Task<T> CreateAsync(T entity);
+        Task CreateRangeAsync(IEnumerable<T> entities);
+        Task<List<T>> ListAsync();
+        Task<int> SaveChangesAsync();
     }
 }

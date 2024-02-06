@@ -9,5 +9,19 @@ namespace Domain.Entities
     public class Movie : IEntity
     {
         public int Id { get; set; }
+        public string Name { get; set; }
+        public int Year { get; set; }
+
+        public Movie(string name, int year)
+        {
+            Name = name;
+            Year = year;
+        }
+
+        public Movie()
+        {
+            Name = string.Empty; 
+            Year = 0;
+        }
     }
 }

@@ -5,20 +5,42 @@ namespace Infrastructure.Repos
     public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {
         private readonly DbSet<T> _dbSet;
+        private readonly ApplicationDbContext _context;
 
         public GenericRepository(ApplicationDbContext context)
         {
+            _context = context;
             _dbSet = context.Set<T>();
         }
 
-        public T? GetById(int id)
+        public async Task<List<T>> FindAsync(System.Linq.Expressions.Expression<Func<T, bool>> linq)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.Where(linq).ToListAsync();
         }
 
-        public List<T> List()
+        public async Task<T?> GetByIdAsync(int id)
         {
-            return _dbSet.ToList();
+            return await _dbSet.FindAsync(id);
+        }
+
+        public async Task<T> CreateAsync(T entity)
+        {
+            var res = await _dbSet.AddAsync(entity);
+            return res.Entity;
+        }
+
+        public async Task CreateRangeAsync(IEnumerable<T> entities) { 
+            await _dbSet.AddRangeAsync(entities);
+        }
+
+        public async Task<List<T>> ListAsync()
+        {
+            return await _dbSet.ToListAsync();
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync();
         }
     }
 }

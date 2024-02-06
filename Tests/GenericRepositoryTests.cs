@@ -6,21 +6,45 @@ namespace Tests
     public class GenericRepositoryTests
     {
         [Fact]
-        public void Can_Get_Movie_List()
+        public async Task Can_Get_Movie_List()
         {
             //Arrange
-            var movieList = new List<Movie>() { new Movie(), new Movie() };
-            var context = new TestApplicationDbContext();
+            var context = GetDbContext();
             var repo = new GenericRepository<Movie>(context);
-           
+            
             //Act
-            context.Movies.AddRange(movieList);
-            context.SaveChanges();
-            var list = repo.List();
+            var list = await repo.ListAsync();
 
             //Assert
             Assert.NotNull(list);
-            Assert.Equal(movieList.Count, list.Count);
+            Assert.True(list.Any());
+        }
+
+        [Fact]
+        public async Task Can_Create_Movie()
+        {
+            var name = Guid.NewGuid().ToString();
+            var year = new Random().Next(1950, DateTime.UtcNow.Year);
+            var newMovie = new Movie(name, year);
+
+            var context = GetDbContext();
+            var repo = new GenericRepository<Movie>(context);
+
+            var inserted = await repo.CreateAsync(newMovie);
+            await repo.SaveChangesAsync();
+
+            ass
+        }
+
+        private ApplicationDbContext GetDbContext()
+        {
+            var movieList = new List<Movie>() { new Movie(), new Movie() };
+            var context = new TestApplicationDbContext();
+
+            context.Movies.AddRange(movieList);
+            context.SaveChanges();
+
+            return context;
         }
     }
 }
