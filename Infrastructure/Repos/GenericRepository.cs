@@ -29,10 +29,6 @@ namespace Infrastructure.Repos
             return res.Entity;
         }
 
-        public async Task CreateRangeAsync(IEnumerable<T> entities) { 
-            await _dbSet.AddRangeAsync(entities);
-        }
-
         public async Task<List<T>> ListAsync()
         {
             return await _dbSet.ToListAsync();
@@ -41,6 +37,11 @@ namespace Infrastructure.Repos
         public async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task CreateRangeAsync(List<T> entities)
+        {
+            await _context.AddRangeAsync(entities);
         }
     }
 }
