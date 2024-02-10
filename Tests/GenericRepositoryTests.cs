@@ -1,6 +1,3 @@
-using Infrastructure.Repos;
-using Microsoft.EntityFrameworkCore;
-
 namespace Tests
 {
     public class GenericRepositoryTests
