@@ -1,21 +1,25 @@
 ﻿
-using Domain.Models;
-using System.Reflection;
 namespace Application.Services
 {
-    public class CsvFile<TOut> : ICsvFile<TOut> where TOut : class, IDto
+    public class CsvFileHandler<TOut> : ICsvFile<TOut> where TOut : class, IDto
     {
-        private readonly IEnumerable<string> _headers;
+        private readonly List<string> _headers;
         private readonly IEnumerable<string> _lines;
-        private readonly List<string> _propNames;
 
-        private CsvFile(IEnumerable<string> headers, IEnumerable<string> lines, IEnumerable<string> propNames)
+        private CsvFileHandler(IEnumerable<string> headers, IEnumerable<string> lines)
         {
-            _headers = headers;
+            _headers = headers.ToList();
             _lines = lines;
-            _propNames = propNames.ToList();
         }
 
+        /// <summary>
+        /// Instantiate a new generic CsvFileHandler from a file path. 
+        /// <typeparamref name="TOut">The specific implementation of IDto that you expect the CSV file to contain.</typeparamref>
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="InvalidDataException"></exception>
         public static async Task<ICsvFile<TOut>> LoadFromPath(string path)
         {
             var allLines = await File.ReadAllLinesAsync(path);
@@ -34,7 +38,7 @@ namespace Application.Services
                 throw new InvalidDataException(validation.GetErrorMessage());
             }
 
-            return new CsvFile<TOut>(headers, allLines.Skip(1), propNames);
+            return new CsvFileHandler<TOut>(headers, allLines.Skip(1));
         }
 
         private static InputValidation ValidateHeaders<T>(IEnumerable<string> headers, IEnumerable<string> propNames)
@@ -50,51 +54,43 @@ namespace Application.Services
             return inputValidation;
         }
 
-        public async Task<IEnumerable<TOut>> GetDtos()
+        /// <summary>
+        /// Get all records of type TOut contained in the CSV file.
+        /// </summary>
+        /// <returns>An IEnumerable of the expected return type.</returns>
+        public IEnumerable<TOut> GetDtos()
         {
             var dtos = new List<TOut>();
             
             foreach(var line in _lines)
             {
                 var dto = BuildDto(line);
+
+                if(dto is null)
+                {
+                    continue;
+                }
+
                 dtos.Add(dto);
             }
 
             return dtos;
         }
 
-        private TOut BuildDto(string line)
+        private TOut? BuildDto(string line)
         {
             var values = line.Split(',');
             var valueDict = new Dictionary<string, object>();
 
             for(var i = 0; i <  values.Length; i++)
             {
-                valueDict.Add(_propNames[i], values[i]);
+                valueDict.Add(_headers[i], values[i]);
             }
 
-            
-            
-            return dto.Create(value);
+            var createMethod = typeof(TOut).GetMethod("Create")?.MakeGenericMethod(typeof(TOut));
+            var dto = createMethod?.Invoke(null, new object[] { valueDict }) as TOut;
+
+            return dto;
         }  
-
-        public async Task<List<MovieImportDto>> GetEntities(string path)
-        {
-            var lines = await File.ReadAllLinesAsync(path);
-            var headers = lines.FirstOrDefault()?.ToLower().Split(',').ToList();
-
-            if(headers is null || headers.Count != 2 || !headers.Contains("title") || !headers.Contains(""))
-            {
-                throw new InvalidDataException("");
-            }
-
-            var titleIndex = headers?.IndexOf("title");
-            var 
-
-
-            lines = lines.Skip(1).ToArray();
-
-            return lines.Select(l => new List<Movie>(l.Split()));
-        }
     }
 }
