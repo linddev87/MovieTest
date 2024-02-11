@@ -9,6 +9,11 @@ namespace Application.Models
     public class MovieImportDto
     {
         public string Title { get; set; }
-        public int Year { get; set; }   
+        public int Year { get; set; }
+        public MovieImportDto(string title, int year)
+        {
+            Title = title;
+            Year = year;
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace Domain.Interfaces
 {
     public interface IDto
     {
+        public IDto Create(Dictionary<string, object> props);
     }
 }
