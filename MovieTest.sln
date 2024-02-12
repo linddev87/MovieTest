@@ -10,11 +10,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{38D42126-5524-47AA-9108-8D0735B0B296}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{38D42126-5524-47AA-9108-8D0735B0B296}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{7508D0AF-D0E5-4931-A4EB-1F1143D9242E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{7508D0AF-D0E5-4931-A4EB-1F1143D9242E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{5CF88A32-F88B-4A6B-91D1-DCA2DC92679F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{5CF88A32-F88B-4A6B-91D1-DCA2DC92679F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvImportApp", "CsvImportApp\CsvImportApp.csproj", "{729BDF0A-EDE8-4722-8569-4F0C2D2224A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{5CF88A32-F88B-4A6B-91D1-DCA2DC92679F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CF88A32-F88B-4A6B-91D1-DCA2DC92679F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CF88A32-F88B-4A6B-91D1-DCA2DC92679F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{729BDF0A-EDE8-4722-8569-4F0C2D2224A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{729BDF0A-EDE8-4722-8569-4F0C2D2224A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{729BDF0A-EDE8-4722-8569-4F0C2D2224A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{729BDF0A-EDE8-4722-8569-4F0C2D2224A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
