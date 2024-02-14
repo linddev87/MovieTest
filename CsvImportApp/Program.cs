@@ -1,11 +1,6 @@
-﻿using Application.Models;
-using Domain.Entities;
-using Domain.Interfaces;
-using Infrastructure;
-using Infrastructure.Repos;
+﻿
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace CsvImportApp
 {
@@ -14,6 +9,10 @@ namespace CsvImportApp
         static async Task Main(string[] args)
         {
             using var host = BuildHost();
+            
+            var context = host.Services.GetRequiredService<ApplicationDbContext>();
+            
+            context.Database.Migrate();
 
             var csvImportService = host.Services.GetRequiredService<CsvImportService<MovieImportDto, Movie>>();
             await csvImportService.RunImport(args);
@@ -24,7 +23,9 @@ namespace CsvImportApp
         private static IHost BuildHost()
         {
             var builder = Host.CreateApplicationBuilder();
-            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("database"));
+            builder.Configuration.AddJsonFile("appsettings.json");
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite($"Data Source={builder.Configuration["Sqlite3DbPath"]}"));
             builder.Services.AddScoped<IGenericRepository<Movie>, GenericRepository<Movie>>();
             builder.Services.AddScoped<CsvImportService<MovieImportDto, Movie>>();
 

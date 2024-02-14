@@ -11,19 +11,15 @@ namespace Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string AlternateKey {get; set;}
+        public string Title { get; set; }
         public int Year { get; set; }
 
-        public Movie(string name, int year)
+        public Movie(string title, int year)
         {
-            Name = name;
+            Title = title;
             Year = year;
-        }
-
-        public Movie()
-        {
-            Name = string.Empty; 
-            Year = 0;
+            AlternateKey = $"{year}-{title}";
         }
     }
 }

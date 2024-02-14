@@ -8,7 +8,7 @@
         {
             
         }
-        
+
         public ApplicationDbContext()
         {
             
@@ -16,7 +16,7 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Movie>().HasAlternateKey(m => new {m.Year, m.Name});
+            modelBuilder.Entity<Movie>().HasAlternateKey(m => m.AlternateKey);
         }
     }
 }

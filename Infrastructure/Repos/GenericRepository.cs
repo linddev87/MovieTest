@@ -39,9 +39,15 @@ namespace Infrastructure.Repos
             return await _context.SaveChangesAsync();
         }
 
-        public async Task CreateRangeAsync(List<T> entities)
+        public async Task CreateRangeAsync(IEnumerable<IEntity> entities)
         {
             await _context.AddRangeAsync(entities);
+        }
+
+        public async Task<Dictionary<string, T>> DictByAltKey()
+        {
+            var dict = await _dbSet.ToDictionaryAsync(e => e.AlternateKey);
+            return dict;
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Tests
             var movieById = await repo.GetByIdAsync(testId);
 
             Assert.NotNull(movieById);
-            Assert.True(string.Equals(movieById.Name, newMovie2.Name));
+            Assert.True(string.Equals(movieById.Title, newMovie2.Title));
             Assert.True(movieById.Year == newMovie2.Year);
         }
 
@@ -76,7 +76,7 @@ namespace Tests
             await repo.SaveChangesAsync();
 
             //Assert
-            Assert.True(string.Equals(inserted.Name, name));
+            Assert.True(string.Equals(inserted.Title, name));
             Assert.True(inserted.Year == year);
         }
 
@@ -107,12 +107,12 @@ namespace Tests
             //Act
             await repo.CreateAsync(newMovie);
             await repo.SaveChangesAsync();
-            var inserted = await repo.FindAsync(m => m.Name.Contains("epic"));            
+            var inserted = await repo.FindAsync(m => m.Title.Contains("epic"));            
 
             //Assert
             Assert.NotNull(inserted);
             Assert.True(inserted.Count() == 1); 
-            Assert.True(string.Equals(inserted.FirstOrDefault()?.Name, newMovie.Name));
+            Assert.True(string.Equals(inserted.FirstOrDefault()?.Title, newMovie.Title));
         }
 
         private ApplicationDbContext GetDbContext()
