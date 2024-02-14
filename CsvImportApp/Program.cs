@@ -1,4 +1,5 @@
-﻿using Application.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using Application.Models;
 using Application.Services;
 using Domain.Entities;
 
@@ -6,9 +7,10 @@ namespace CsvImportApp
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            var file = CsvFileHandler<MovieImportDto>.LoadFromPath(args[0]);
+            var file = new CsvImportService(args[0]);
+            await file.ImportFromFile();
         }
     }
 }
