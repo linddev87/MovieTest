@@ -4,6 +4,16 @@
     {
         public DbSet<Movie> Movies { get; set; }
 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
+        {
+            
+        }
+        
+        public ApplicationDbContext()
+        {
+            
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Movie>().HasAlternateKey(m => new {m.Year, m.Name});

@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Entities;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Application.Models
 
         public IEntity GetEntity()
         {
-            throw new NotImplementedException();
+            return new Movie(Title, Year);
         }
     }
 }
