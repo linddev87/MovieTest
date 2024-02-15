@@ -10,6 +10,8 @@
 	- CsvImportService
 	- FileHandler
 
+- Clean up files (unused usings)
+
 Documentation:
 - Readme
 - Backlog

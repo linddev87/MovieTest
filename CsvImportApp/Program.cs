@@ -15,7 +15,7 @@ namespace CsvImportApp
             context.Database.EnsureCreated();
             context.Database.Migrate();
 
-            var csvImportService = host.Services.GetRequiredService<CsvImportService<MovieImportDto, Movie>>();
+            var csvImportService = host.Services.GetRequiredService<IGenericImportService<MovieImportDto, Movie>>();
             await csvImportService.RunImport();
 
             await host.RunAsync();
@@ -28,7 +28,7 @@ namespace CsvImportApp
 
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite($"Data Source={builder.Configuration["Sqlite3DbPath"]}"));
             builder.Services.AddScoped<IGenericRepository<Movie>, GenericRepository<Movie>>();
-            builder.Services.AddScoped<CsvImportService<MovieImportDto, Movie>>();
+            builder.Services.AddScoped<IGenericImportService<MovieImportDto, Movie>, CsvImportService<MovieImportDto, Movie>>();
 
             return builder.Build();
         }
