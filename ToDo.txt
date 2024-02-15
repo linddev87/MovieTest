@@ -1,0 +1,15 @@
+- Add API
+- Catch all exeptions
+- Add Logging
+	- Console App
+	- API
+- Comments where needed
+
+- UnitTests:
+	- Missing methods in Genereric Repository
+	- CsvImportService
+	- FileHandler
+
+Documentation:
+- Readme
+- Backlog
