@@ -11,22 +11,25 @@ namespace Api {
                 app.UseSwaggerUI();
             }
 
-            using (var scope = app.Services.CreateScope()){
-                var movieService = scope.ServiceProvider.GetRequiredService<IMovieService>();
+            var scope = app.Services.CreateScope();
+            var movieService = scope.ServiceProvider.GetRequiredService<IMovieService>();
 
-                app.MapGet("/movies", async () => await movieService.ListAll()).WithOpenApi();
-                app.MapGet("/movies/query", async (HttpRequest request) => {
-                    int.TryParse(request.Query["from"], out var from);
-                    int.TryParse(request.Query["to"], out var to);
-                    int.TryParse(request.Query["pageSize"], out var pageSize);
-                    int.TryParse(request.Query["pageNumber"], out var pageNumber);
-                    var searchPhrase = request.Query["searchPhrase"];
-                    
-                    var res = await movieService.Query(from: from, to: to, pageSize: pageSize, pageNumber: pageNumber, searchPhrase: searchPhrase);
+            app.MapGet("/movies", async () => await movieService.ListAll()).WithOpenApi();
+            app.MapGet("/movies/query", async (HttpRequest request) => {
+                int.TryParse(request.Query["from"], out var from);
+                int.TryParse(request.Query["to"], out var to);
+                int.TryParse(request.Query["pageSize"], out var pageSize);
+                int.TryParse(request.Query["pageNumber"], out var pageNumber);
+                var searchPhrase = request.Query["searchPhrase"].FirstOrDefault() ?? string.Empty;
 
-                    return res;
-                }).WithOpenApi();
-            };
+                var queryRequest = new MovieQueryRequest(from, to, pageSize, pageNumber, searchPhrase);
+
+                var movies = await movieService.Query(queryRequest);
+
+
+                return movies;
+            }).WithOpenApi();
+
     
             app.Run();
         }

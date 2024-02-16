@@ -1,10 +1,11 @@
-﻿namespace Domain;
-
-public interface IQueryResult<T> where T: IEntity
+﻿namespace Domain.Interfaces
 {
-    int PageCount {get;}
-    int PageSize {get;}
-    int PageNumber {get;}
-    Dictionary<string, object> Params {get;}
-    IEnumerable<T> Entities {get;}
+    public interface IQueryResult<T> where T : IEntityResult
+    {
+        int PageCount { get; }
+        int PageSize { get; }
+        int PageNumber { get; }
+        Dictionary<string, object> Params { get; }
+        IEnumerable<T> EntityResults { get; }
+    }
 }

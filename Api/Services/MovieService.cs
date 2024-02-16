@@ -1,7 +1,5 @@
 ﻿using Domain;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
+using System.Linq.Expressions;
 
 namespace Application.Services{
 
@@ -16,25 +14,45 @@ namespace Application.Services{
             _cache = cache;
         }
 
-        public async Task<IEnumerable<Movie>> ListAll()
+        public async Task<IEnumerable<MovieResult>> ListAll()
         {
-            try{
+            try
+            {
                 var cacheKey = "Application.Services.MovieService.ListAll";
 
-                if(!_cache.TryGetValue(cacheKey, out IEnumerable<Movie>? result)){
-                    result = await _repo.ListAsync();
+                if(!_cache.TryGetValue(cacheKey, out IEnumerable<MovieResult>? result)){
+                    var movieList = await _repo.ListAsync();
+                    result = movieList.OrderByDescending(m => m.CreatedDate).Select(m => new MovieResult(m));
                 }
 
-                return result ?? new List<Movie>();
+                return result ?? new List<MovieResult>();
             }
             catch (Exception e){
                 throw;
             }
         }
 
-        public Task<IQueryResult<Movie>> Query(int from, int to, string searchPhrase, int pageSize, int pageNumber)
+        public async Task<IQueryResult<MovieResult>> Query(MovieQueryRequest query)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var cacheKey = $"Application.Services.MovieService.Query:{query.From}_{query.To}_{query.PageSize}_{query.PageNumber}_{query.SearchPhrase}";
+
+                if (!_cache.TryGetValue(cacheKey, out IEnumerable<MovieResult>? result))
+                {
+                    
+                    var movieList = await _repo.Query(query);
+                       
+
+                    result = movieList.OrderByDescending(m => m.CreatedDate).Select(m => new MovieResult(m));
+                }
+
+                return result ?? new List<MovieResult>();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
     }
 
