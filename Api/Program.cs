@@ -1,10 +1,24 @@
+namespace Api {
+    public class Program{
+        public void Main(string[] args){
+            var app = BuildApp(args);
+            MovieEndpoints.Map(app);
 
-var builder = WebApplication.CreateBuilder(args);
+            app.Run();
+        }
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite($"Data Source={builder.Configuration["Sqlite3DbPath"]}"));
-            
-var app = builder.Build();
+        private WebApplication BuildApp(string[] args){
+            var builder = WebApplication.CreateBuilder(args);
 
-app.MapGet("/", () => "Hello World!");
+            builder.Configuration.AddJsonFile("appsettings.json", false, true);
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite($"Data Source={builder.Configuration["Sqlite3DbPath"]}"));
 
-app.Run();
+            builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
+            builder.Services.AddScoped<IMovieService, MovieService>();
+
+            return builder.Build();
+        }
+    }
+}
+
+
