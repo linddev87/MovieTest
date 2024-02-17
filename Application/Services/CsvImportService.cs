@@ -1,29 +1,35 @@
-
-
 using Application.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 public class CsvImportService<TIn, TOut> : IGenericImportService<TIn,TOut> where TIn : IDto where TOut : IEntity{
     private string _filePath;
     private readonly IGenericRepository<TOut> _repo;
-    
-    public CsvImportService(IGenericRepository<TOut> repo, IConfiguration config)
+    private readonly ILogger<CsvImportService<TIn, TOut>> _log;
+
+    public CsvImportService(IGenericRepository<TOut> repo, IConfiguration config, ILogger<CsvImportService<TIn, TOut>> log)
     {
         _repo = repo;
+        _log = log;
         _filePath = config["PathToImportFile"] ?? throw new InvalidOperationException("Missing configuration value 'PathToImportFile'");
     }
 
     public async Task RunImport()
     {
+        try{
+            var dtos = await FileHandler.GetRecordsFromFile<TIn>(_filePath);
+            var entities = dtos.Select(d => d.GetEntity()).ToList();
+            if(entities is null){
+                throw new InvalidOperationException("Failed to convert Dtos to entitites");
+            }
 
-        var dtos = await FileHandler.GetRecordsFromFile<TIn>(_filePath);
-        var entities = dtos.Select(d => d.GetEntity()).ToList();
-        if(entities is null){
-            throw new InvalidOperationException("Failed to convert Dtos to entitites");
+            await InsertNewEntities(entities);
+            FileHandler.ArchiveImportFile(_filePath);
         }
-
-        await InsertNewEntities(entities);
-        FileHandler.ArchiveImportFile(_filePath);
+        catch(Exception e){
+            _log.LogError(e, e.Message);
+            throw;
+        }
     }
 
     private async Task InsertNewEntities(List<IEntity> entities)

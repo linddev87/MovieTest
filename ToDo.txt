@@ -1,8 +1,3 @@
-
-- Catch all exeptions
-- Add Logging
-	- Console App
-	- API
 - Clean up files
 	- Unused usings
 	- Correct namespaces for all files

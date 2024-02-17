@@ -8,3 +8,5 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Caching.Memory;
 global using Domain.Entities;
 global using Infrastructure.Repos;
+global using Serilog;
+global using Serilog.AspNetCore;
