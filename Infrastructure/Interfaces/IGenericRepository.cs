@@ -1,6 +1,6 @@
 ﻿using Domain.Models;
 
-namespace Domain.Interfaces
+namespace Infrastructure.Interfaces
 {
     public interface IGenericRepository<T> where T : IEntity
     {
@@ -11,6 +11,5 @@ namespace Domain.Interfaces
         Task<List<T>> ListAsync();
         Task<int> SaveChangesAsync();
         Task<Dictionary<string, T>> DictByAltKey();
-        Task<QueryResult> Query(MovieQueryRequest query);
     }
 }

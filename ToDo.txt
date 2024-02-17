@@ -1,16 +1,18 @@
-- Add API
+
 - Catch all exeptions
 - Add Logging
 	- Console App
 	- API
+- Clean up files
+	- Unused usings
+	- Correct namespaces for all files
+
 - Comments where needed
 
 - UnitTests:
 	- Missing methods in Genereric Repository
 	- CsvImportService
 	- FileHandler
-
-- Clean up files (unused usings)
 
 Documentation:
 - Readme

@@ -34,6 +34,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("TitleToLower")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Year")
                         .HasColumnType("INTEGER");
 
@@ -44,7 +48,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("AlternateKey")
                         .IsUnique();
 
-                    b.HasIndex("Title");
+                    b.HasIndex("TitleToLower");
 
                     b.HasIndex("Year")
                         .IsDescending();

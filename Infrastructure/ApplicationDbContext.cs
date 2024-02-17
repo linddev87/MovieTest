@@ -20,7 +20,7 @@
 
             modelBuilder.Entity<Movie>().HasIndex(m => m.AlternateKey).IsUnique(true);
             modelBuilder.Entity<Movie>().HasIndex(m => m.Year).IsDescending(true);
-            modelBuilder.Entity<Movie>().HasIndex(m => m.Title);
+            modelBuilder.Entity<Movie>().HasIndex(m => m.TitleToLower);
         }
     }
 }

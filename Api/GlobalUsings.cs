@@ -1,4 +1,5 @@
 global using Infrastructure;
+global using Infrastructure.Interfaces;
 global using Domain.Interfaces;
 global using Application.Services;
 global using Api.Interfaces;

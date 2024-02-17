@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240215152425_add indexes")]
-    partial class addindexes
+    [Migration("20240217133050_index to lower")]
+    partial class indextolower
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("TitleToLower")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Year")
                         .HasColumnType("INTEGER");
 
@@ -47,7 +51,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("AlternateKey")
                         .IsUnique();
 
-                    b.HasIndex("Title");
+                    b.HasIndex("TitleToLower");
 
                     b.HasIndex("Year")
                         .IsDescending();

@@ -1,8 +1,9 @@
-﻿namespace Api.Interfaces{
+﻿
+namespace Api.Interfaces{
     public interface IMovieService
     {
-        Task<IEnumerable<MovieResult>> ListAll();
-        Task<IQueryResult<MovieResult>> Query(MovieQueryRequest queryRequest);
+        Task<IResult> ListAll();
+        Task<IResult> Query(MovieQueryRequest queryRequest);
     }    
 }
 

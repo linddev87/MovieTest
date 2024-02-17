@@ -11,14 +11,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240215151833_createddate added to movie")]
-    partial class createddateaddedtomovie
+    [Migration("20240217132011_collation2")]
+    partial class collation2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
+            modelBuilder
+                .UseCollation("NOCASE")
+                .HasAnnotation("ProductVersion", "8.0.2");
 
             modelBuilder.Entity("Domain.Entities.Movie", b =>
                 {
@@ -43,6 +45,14 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasAlternateKey("AlternateKey");
+
+                    b.HasIndex("AlternateKey")
+                        .IsUnique();
+
+                    b.HasIndex("Title");
+
+                    b.HasIndex("Year")
+                        .IsDescending();
 
                     b.ToTable("Movies");
                 });
