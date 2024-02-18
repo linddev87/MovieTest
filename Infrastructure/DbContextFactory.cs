@@ -1,13 +1,13 @@
-using Infrastructure;
-using Microsoft.EntityFrameworkCore.Design;
-
-public class DesignTimeDbContext : IDesignTimeDbContextFactory<ApplicationDbContext>
+namespace Infrastructure
 {
-    public ApplicationDbContext CreateDbContext(string[] args)
+    public class DesignTimeDbContext : IDesignTimeDbContextFactory<ApplicationDbContext>
     {
-        var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-        optionsBuilder.UseSqlite($"Data Source={args[0]}");
+        public ApplicationDbContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            optionsBuilder.UseSqlite($"Data Source={args[0]}");
 
-        return new ApplicationDbContext(optionsBuilder.Options);
+            return new ApplicationDbContext(optionsBuilder.Options);
+        }
     }
 }

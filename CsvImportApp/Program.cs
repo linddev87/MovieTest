@@ -1,15 +1,11 @@
-﻿
-using System.Diagnostics.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
-
-namespace CsvImportApp
+﻿namespace CsvImportApp
 {
     internal class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             using var host = BuildHost();
-            
+
             var context = host.Services.GetRequiredService<ApplicationDbContext>();
 
             context.Database.EnsureCreated();

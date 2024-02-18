@@ -1,6 +1,4 @@
-﻿using Domain.Interfaces;
-
-namespace Infrastructure.Repos
+﻿namespace Infrastructure.Repos
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {

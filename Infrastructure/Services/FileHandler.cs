@@ -1,6 +1,4 @@
-﻿
-
-namespace Application.Services
+﻿namespace Infrastructure.Services
 {
     public class FileHandler : IGenericFileHandler
     {
@@ -26,6 +24,5 @@ namespace Application.Services
             Directory.CreateDirectory(archivePath);
             File.Move(filePath, $"{archivePath}/{archiveFileName}");
         }
-
     }
 }

@@ -1,7 +1,4 @@
-﻿
-
-
-namespace Domain.Models
+﻿namespace Domain.Models
 {
     public class GenericQueryResult<T> : IQueryResult<T> where T : IEntity
     {
@@ -21,8 +18,5 @@ namespace Domain.Models
             Params = parameters;
             Entities = entities;
         }
-
     }
 };
-
-

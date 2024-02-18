@@ -1,17 +1,19 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class Movie : IEntity
     {
         [Key]
         public int Id { get; set; }
+
         [JsonIgnore]
-        public string AlternateKey {get; set;}
+        public string AlternateKey { get; set; }
+
         [JsonIgnore]
         public string TitleToLower { get; set; }
+
         public string Title { get; set; }
         public int Year { get; set; }
+
         [JsonIgnore]
         public DateTime CreatedDate { get; set; }
 

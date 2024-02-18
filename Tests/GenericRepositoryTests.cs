@@ -8,7 +8,7 @@ namespace Tests
             //Arrange
             var context = GetDbContext();
             var repo = new GenericRepository<Movie>(context);
-            
+
             //Act
             var list = await repo.ListAsync();
 
@@ -46,7 +46,7 @@ namespace Tests
             var repo = new GenericRepository<Movie>(context);
             var newMovies = new List<Movie>();
 
-            for(var i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 newMovies.Add(new Movie($"An Epic Movie {i}", 1987 + i));
             }
@@ -107,11 +107,11 @@ namespace Tests
             //Act
             await repo.CreateAsync(newMovie);
             await repo.SaveChangesAsync();
-            var inserted = await repo.FindAsync(m => m.Title.Contains("epic"));            
+            var inserted = await repo.FindAsync(m => m.Title.Contains("epic"));
 
             //Assert
             Assert.NotNull(inserted);
-            Assert.True(inserted.Count() == 1); 
+            Assert.True(inserted.Count() == 1);
             Assert.True(string.Equals(inserted.FirstOrDefault()?.Title, newMovie.Title));
         }
 

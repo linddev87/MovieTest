@@ -1,16 +1,9 @@
-﻿using Domain.Models;
-using Microsoft.EntityFrameworkCore.Storage.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Infrastructure.Repos
+﻿namespace Infrastructure.Repos
 {
     public class MovieRepository : GenericRepository<Movie>, IMovieRepository
     {
         private readonly ApplicationDbContext _context;
+
         public MovieRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
@@ -21,7 +14,7 @@ namespace Infrastructure.Repos
             //Set up base query
             var query = _context.Movies.AsNoTracking();
             var paramsDict = new Dictionary<string, object>();
-            
+
             //Apply filters
             if (req.From is not null)
             {
@@ -44,7 +37,7 @@ namespace Infrastructure.Repos
             var resultsCount = query.Count();
 
             //Apply pagination
-            var entities = await 
+            var entities = await
                 query.OrderByDescending(m => m.Year)
                 .ThenBy(m => m.Title)
                 .Skip(req.PageSize * (req.PageNumber - 1))

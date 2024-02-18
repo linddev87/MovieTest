@@ -1,6 +1,8 @@
-﻿global using Domain.Interfaces;
+﻿global using CsvHelper;
 global using Domain.Entities;
+global using Domain.Interfaces;
+global using Domain.Models;
 global using Infrastructure.Interfaces;
 global using Microsoft.EntityFrameworkCore;
-global using CsvHelper;
+global using Microsoft.EntityFrameworkCore.Design;
 global using System.Globalization;

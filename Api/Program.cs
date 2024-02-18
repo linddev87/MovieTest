@@ -1,10 +1,9 @@
-
-
-using Microsoft.Extensions.Hosting;
-
-namespace Api {
-    public class Program{
-        public static void Main(string[] args){
+namespace Api
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
             var app = BuildApp(args);
 
             if (app.Environment.IsDevelopment())
@@ -26,10 +25,11 @@ namespace Api {
             app.Run();
         }
 
-        private static WebApplication BuildApp(string[] args){
+        private static WebApplication BuildApp(string[] args)
+        {
             var builder = WebApplication.CreateBuilder(args);
             builder.Configuration.AddJsonFile("appsettings.json", false, true);
-           
+
             builder.Logging.ClearProviders();
             var logger = new LoggerConfiguration()
             .WriteTo.File($"{Directory.GetCurrentDirectory()}/logging/log.log", Serilog.Events.LogEventLevel.Warning)
@@ -49,5 +49,3 @@ namespace Api {
         }
     }
 }
-
-
