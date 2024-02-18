@@ -8,6 +8,8 @@
         public Dictionary<string, object> Params { get; }
         public IEnumerable<T> Entities { get; }
 
+        public int EntityCount => throw new NotImplementedException();
+
         public QueryResult(int pageCount, int pageSize, int pageNumber, Dictionary<string, object> parameters, IEnumerable<T> entities)
         {
             PageCount = pageCount;

@@ -1,4 +1,5 @@
-namespace Tests
+
+namespace Tests.Tests
 {
     public class GenericRepositoryTests
     {
@@ -6,8 +7,7 @@ namespace Tests
         public async Task Can_Get_Movie_List()
         {
             //Arrange
-            var context = GetDbContext();
-            var repo = new GenericRepository<Movie>(context);
+            var repo = TestUtilities.GetNewGenericRepository<Movie>();
 
             //Act
             var list = await repo.ListAsync();
@@ -21,9 +21,8 @@ namespace Tests
         public async Task Can_Get_By_Id()
         {
             //Arrange
+            var repo = TestUtilities.GetNewGenericRepository<Movie>();
             var testId = 123456;
-            var context = GetDbContext();
-            var repo = new GenericRepository<Movie>(context);
             var newMovie1 = new Movie("An Epic Movie 2", 1989);
             var newMovie2 = new Movie("An Epic Movie 3", 1991);
             newMovie2.Id = testId;
@@ -42,8 +41,7 @@ namespace Tests
         public async Task Can_Insert_Range()
         {
             //Arrange
-            var context = GetDbContext();
-            var repo = new GenericRepository<Movie>(context);
+            var repo = TestUtilities.GetNewGenericRepository<Movie>();
             var newMovies = new List<Movie>();
 
             for (var i = 0; i < 10; i++)
@@ -65,11 +63,10 @@ namespace Tests
         public async Task Can_Create_Movie()
         {
             //Arrange
+            var repo = TestUtilities.GetNewGenericRepository<Movie>();
             var name = Guid.NewGuid().ToString();
             var year = new Random().Next(1950, DateTime.UtcNow.Year);
             var newMovie = new Movie(name, year);
-            var context = GetDbContext();
-            var repo = new GenericRepository<Movie>(context);
 
             //Act
             var inserted = await repo.CreateAsync(newMovie);
@@ -84,8 +81,7 @@ namespace Tests
         public async Task Cannot_Create_Duplicates()
         {
             //Arrange
-            var context = GetDbContext();
-            var repo = new GenericRepository<Movie>(context);
+            var repo = TestUtilities.GetNewGenericRepository<Movie>();
             var name = "An epic movie";
             var year = 1987;
 
@@ -100,9 +96,8 @@ namespace Tests
         public async Task Can_Find_Entity_With_Linq()
         {
             //Arrange
+            var repo = TestUtilities.GetNewGenericRepository<Movie>();
             var newMovie = new Movie("An epic movie", 1987);
-            var context = GetDbContext();
-            var repo = new GenericRepository<Movie>(context);
 
             //Act
             await repo.CreateAsync(newMovie);
@@ -115,15 +110,23 @@ namespace Tests
             Assert.True(string.Equals(inserted.FirstOrDefault()?.Title, newMovie.Title));
         }
 
-        private ApplicationDbContext GetDbContext()
+        [Fact]
+        public async Task Can_Get_Dict_By_Alt_Key()
         {
-            var movieList = new List<Movie>() { new Movie("Test1", 1950), new Movie("Test2", 1950) };
-            var context = new TestApplicationDbContext();
+            //Arrange
+            var repo = TestUtilities.GetNewGenericRepository<Movie>();
+            var newMovie = new Movie("An epic movie", 1987);
 
-            context.Movies.AddRange(movieList);
-            context.SaveChanges();
+            //Act
+            await repo.CreateAsync(newMovie);
+            await repo.SaveChangesAsync();
+            var dict = await repo.DictByAltKey();
 
-            return context;
+            //Assert
+            Assert.True(dict.Count > 1);
+            Assert.True(dict.ContainsKey(newMovie.AlternateKey));
         }
+
+
     }
 }

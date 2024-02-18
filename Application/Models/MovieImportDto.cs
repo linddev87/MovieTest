@@ -2,7 +2,7 @@
 {
     public class MovieImportDto : IDto
     {
-        public string Title { get; set; }
+        public required string Title { get; set; }
         public int Year { get; set; }
 
         public IEntity GetEntity()
