@@ -30,7 +30,7 @@
 
             if (!string.IsNullOrEmpty(req.SearchPhrase))
             {
-                query = query.Where(m => m.TitleToLower.Contains(req.SearchPhrase.ToLower()));
+                query = query.Where(m => m.TitleToLower.Contains(req.SearchPhrase, StringComparison.InvariantCultureIgnoreCase));
                 paramsDict.Add("SearchPhrase", req.SearchPhrase);
             }
 

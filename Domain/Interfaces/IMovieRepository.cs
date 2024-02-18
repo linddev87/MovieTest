@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Interfaces
+﻿namespace Domain.Interfaces
 {
     public interface IMovieRepository : IGenericRepository<Movie>
     {

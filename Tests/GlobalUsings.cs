@@ -1,6 +1,11 @@
+global using Api.Services;
 global using Domain.Entities;
 global using Domain.Interfaces;
+global using Domain.Models;
 global using Infrastructure;
 global using Infrastructure.Repos;
+global using Microsoft.AspNetCore.Http;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.DependencyInjection;
+global using System.Text.Json;
 global using Xunit;

@@ -75,7 +75,7 @@ namespace Tests.Tests
         {
             //Arrange
             var repo = TestUtilities.GetNewMovieRepository();
-            var preInsertCount = repo.ListAsync().Result.Count();
+            var preInsertCount = repo.ListAsync().Result.Count;
             var movieList = new List<Movie>();
             
             for(var i = 0; i < 100; i++)
@@ -83,7 +83,7 @@ namespace Tests.Tests
                 movieList.Add(new Movie($"PaginationTest{i}", 1920 + i));
             }
             
-            var totalCount = preInsertCount + movieList.Count();
+            var totalCount = preInsertCount + movieList.Count;
 
             //Act
             await repo.CreateRangeAsync(movieList);
@@ -136,16 +136,16 @@ namespace Tests.Tests
             var to = 2024;
 
             //Act
-            var inserted = await repo.CreateAsync(newMovie);
+            await repo.CreateAsync(newMovie);
             await repo.SaveChangesAsync();
 
             var queryResult = await repo.Query(new MovieQueryRequest(searchPhrase: searchPhrase, from: from, to: to));
 
             //Assert
-            Assert.True(queryResult.Params.ContainsKey("SearchPhrase") && queryResult.Params.ContainsKey("From") && queryResult.Params.ContainsKey("To"));
-            Assert.Equal(queryResult.Params["SearchPhrase"], searchPhrase);
-            Assert.Equal(queryResult.Params["From"], from);
-            Assert.Equal(queryResult.Params["To"], to);
+            Assert.True(queryResult.Parameters.ContainsKey("SearchPhrase") && queryResult.Parameters.ContainsKey("From") && queryResult.Parameters.ContainsKey("To"));
+            Assert.Equal(queryResult.Parameters["SearchPhrase"], searchPhrase);
+            Assert.Equal(queryResult.Parameters["From"], from);
+            Assert.Equal(queryResult.Parameters["To"], to);
         }
 
 

@@ -2,7 +2,6 @@
 global using Domain.Entities;
 global using Domain.Interfaces;
 global using Domain.Models;
-global using Infrastructure.Interfaces;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Design;
 global using System.Globalization;

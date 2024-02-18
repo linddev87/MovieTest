@@ -2,12 +2,12 @@
 {
     public class GenericQueryResult<T> : IQueryResult<T> where T : IEntity
     {
-        public int EntityCount { get; }
-        public int PageCount { get; }
-        public int PageSize { get; }
-        public int PageNumber { get; }
-        public Dictionary<string, object> Params { get; }
-        public IEnumerable<T> Entities { get; }
+        public int EntityCount { get; set; }
+        public int PageCount { get; set; }
+        public int PageSize { get; set; }
+        public int PageNumber { get; set; }
+        public Dictionary<string, object> Parameters { get; set; }
+        public IEnumerable<T> Entities { get; set; }
 
         public GenericQueryResult(int entityCount, int pageCount, int pageSize, int pageNumber, Dictionary<string, object> parameters, IEnumerable<T> entities)
         {
@@ -15,7 +15,7 @@
             PageCount = pageCount;
             PageSize = pageSize;
             PageNumber = pageNumber;
-            Params = parameters;
+            Parameters = parameters;
             Entities = entities;
         }
     }

@@ -41,7 +41,8 @@ namespace Api
 
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite($"Data Source={builder.Configuration["Sqlite3DbPath"]}"));
 
-            builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
+            builder.Services.AddMemoryCache();
+
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddScoped<IMovieService, MovieService>();
 

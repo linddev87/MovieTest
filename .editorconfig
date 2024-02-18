@@ -1,0 +1,13 @@
+﻿[*.cs]
+
+# IDE0290: Use primary constructor
+dotnet_diagnostic.IDE0290.severity = none
+
+# CA2254: Template should be a static expression
+dotnet_diagnostic.CA2254.severity = silent
+
+# IDE0060: Remove unused parameter
+dotnet_diagnostic.IDE0060.severity = none
+
+# CS8981: The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+dotnet_diagnostic.CS8981.severity = silent

@@ -1,9 +1,10 @@
 global using Application.Models;
 global using Application.Services;
 global using Domain.Entities;
+global using Domain.Interfaces;
 global using Infrastructure;
-global using Infrastructure.Interfaces;
 global using Infrastructure.Repos;
+global using Infrastructure.Services;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;

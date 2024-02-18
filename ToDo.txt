@@ -1,11 +1,4 @@
-
 - Comments where needed
-
-- UnitTests:
-	- Missing methods in Genereric Repository
-	- CsvImportService
-	- FileHandler
-	- MovieService
 
 Documentation:
 - Readme

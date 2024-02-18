@@ -14,7 +14,7 @@ namespace Tests.Tests
 
             //Assert
             Assert.NotNull(list);
-            Assert.True(list.Any());
+            Assert.True(list.Count > 0);
         }
 
         [Fact]
@@ -24,8 +24,10 @@ namespace Tests.Tests
             var repo = TestUtilities.GetNewGenericRepository<Movie>();
             var testId = 123456;
             var newMovie1 = new Movie("An Epic Movie 2", 1989);
-            var newMovie2 = new Movie("An Epic Movie 3", 1991);
-            newMovie2.Id = testId;
+            var newMovie2 = new Movie("An Epic Movie 3", 1991)
+            {
+                Id = testId
+            };
 
             //Act
             await repo.CreateRangeAsync(new List<Movie> { newMovie1, newMovie2 });
@@ -106,7 +108,7 @@ namespace Tests.Tests
 
             //Assert
             Assert.NotNull(inserted);
-            Assert.True(inserted.Count() == 1);
+            Assert.True(inserted.Count == 1);
             Assert.True(string.Equals(inserted.FirstOrDefault()?.Title, newMovie.Title));
         }
 

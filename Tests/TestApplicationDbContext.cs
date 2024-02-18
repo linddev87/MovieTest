@@ -4,9 +4,9 @@
     {
         private readonly string _dbName;
 
-        public TestApplicationDbContext(string dbName)
+        public TestApplicationDbContext()
         {
-            _dbName = dbName;
+            _dbName = Guid.NewGuid().ToString();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)

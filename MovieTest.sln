@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4D1014BF-36E7-4DA9-BC6F-B0C6895A3FC0}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		Infrastructure\GlobalSuppressions.cs = Infrastructure\GlobalSuppressions.cs
 		ToDo.txt = ToDo.txt
 	EndProjectSection
 EndProject
@@ -19,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsvImportApp", "CsvImportApp\CsvImportApp.csproj", "{729BDF0A-EDE8-4722-8569-4F0C2D2224A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{52AADF9E-D94C-4483-830D-5F93791A240C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{52AADF9E-D94C-4483-830D-5F93791A240C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

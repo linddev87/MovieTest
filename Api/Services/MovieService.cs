@@ -1,4 +1,4 @@
-﻿namespace Application.Services
+﻿namespace Api.Services
 {
     public class MovieService : IMovieService
     {

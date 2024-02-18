@@ -30,6 +30,7 @@
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite($"Data Source={builder.Configuration["Sqlite3DbPath"]}"));
             builder.Services.AddScoped<IGenericRepository<Movie>, GenericRepository<Movie>>();
             builder.Services.AddScoped<IGenericImportService<MovieImportDto, Movie>, CsvImportService<MovieImportDto, Movie>>();
+            builder.Services.AddScoped<IGenericFileHandler, FileHandler>();
 
             return builder.Build();
         }
