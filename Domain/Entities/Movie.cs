@@ -5,6 +5,7 @@
         [Key]
         public int Id { get; set; }
 
+        //Adding AlternateKey to support movies with the same title but from different years.
         [JsonIgnore]
         public string AlternateKey { get; set; }
 

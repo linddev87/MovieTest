@@ -1,5 +1,0 @@
-- Comments where needed
-
-Documentation:
-- Readme
-- Backlog
