@@ -1,5 +1,3 @@
-global using Api.Interfaces;
-global using Api.Services;
 global using Domain.Entities;
 global using Domain.Interfaces;
 global using Domain.Models;

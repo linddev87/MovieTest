@@ -9,7 +9,7 @@
             _context = context;
         }
 
-        public async Task<IQueryResult<Movie>> Query(MovieQueryRequest req)
+        public async Task<IQueryResult<Movie>> Query(MovieQuery req)
         {
             //Set up base query
             var query = _context.Movies.AsNoTracking();

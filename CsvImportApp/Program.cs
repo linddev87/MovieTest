@@ -1,5 +1,8 @@
 ﻿namespace CsvImportApp
 {
+    /// <summary>
+    /// Simple console app responsible for executing 
+    /// </summary>
     internal class Program
     {
         private static async Task Main(string[] args)
@@ -11,10 +14,17 @@
             context.Database.EnsureCreated();
             context.Database.Migrate();
 
-            var csvImportService = host.Services.GetRequiredService<IGenericImportService<MovieImportDto, Movie>>();
-            await csvImportService.RunImport();
+            Console.WriteLine();
+            Console.WriteLine($"Running movie import.");
+            Console.WriteLine();
 
-            await host.RunAsync();
+            var csvImportService = host.Services.GetRequiredService<IGenericImportService<MovieImportDto, Movie>>();
+            var inserted = await csvImportService.RunImport();
+
+            Console.WriteLine();
+            Console.WriteLine($"Import complete. Inserted {inserted} new movies. Press any key to exit.");
+            Console.ReadLine();
+            //await host.RunAsync();
         }
 
         private static IHost BuildHost()

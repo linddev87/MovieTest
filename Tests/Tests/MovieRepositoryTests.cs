@@ -13,8 +13,8 @@ namespace Tests.Tests
             //Arrange
             var repo = TestUtilities.GetNewMovieRepository();
             var newMovie = new Movie("An Epic Movie 4", 1997);
-            var includeQuery = new MovieQueryRequest(from: 1996, to: 1998);
-            var excludeQuery = new MovieQueryRequest(to: 1996);
+            var includeQuery = new MovieQuery(from: 1996, to: 1998);
+            var excludeQuery = new MovieQuery(to: 1996);
 
             //Act
             var inserted = await repo.CreateAsync(newMovie);
@@ -34,8 +34,8 @@ namespace Tests.Tests
             //Arrange
             var repo = TestUtilities.GetNewMovieRepository();
             var newMovie = new Movie("An Epic Movie 11", 2020);
-            var includeQuery = new MovieQueryRequest(searchPhrase: "Epic Movie");
-            var excludeQuery = new MovieQueryRequest(searchPhrase: "Insane Movie");
+            var includeQuery = new MovieQuery(searchPhrase: "Epic Movie");
+            var excludeQuery = new MovieQuery(searchPhrase: "Insane Movie");
 
             //Act
             var inserted = await repo.CreateAsync(newMovie);
@@ -55,8 +55,8 @@ namespace Tests.Tests
             //Arrange
             var repo = TestUtilities.GetNewMovieRepository();
             var newMovie = new Movie("An Epic Movie 12", 2021);
-            var pascalCaseQuery = new MovieQueryRequest(searchPhrase: "Epic Movie");
-            var lowerCaseQuery = new MovieQueryRequest(searchPhrase: "epic movie");
+            var pascalCaseQuery = new MovieQuery(searchPhrase: "Epic Movie");
+            var lowerCaseQuery = new MovieQuery(searchPhrase: "epic movie");
 
             //Act
             var inserted = await repo.CreateAsync(newMovie);
@@ -88,7 +88,7 @@ namespace Tests.Tests
             //Act
             await repo.CreateRangeAsync(movieList);
             await repo.SaveChangesAsync();
-            var queryResult = await repo.Query(new MovieQueryRequest());
+            var queryResult = await repo.Query(new MovieQuery());
 
             //Assert
             Assert.Equal(queryResult.EntityCount, totalCount);
@@ -114,8 +114,8 @@ namespace Tests.Tests
             await repo.CreateRangeAsync(movieList);
             await repo.SaveChangesAsync();
 
-            var queryPage1Result = await repo.Query(new MovieQueryRequest(pageSize: requiredPageSize));
-            var queryPage2Result = await repo.Query(new MovieQueryRequest(pageSize: requiredPageSize, pageNumber: 2));
+            var queryPage1Result = await repo.Query(new MovieQuery(pageSize: requiredPageSize));
+            var queryPage2Result = await repo.Query(new MovieQuery(pageSize: requiredPageSize, pageNumber: 2));
             
             var page1Ids = queryPage1Result.Entities.Select(e => e.Id);
             var page2Ids = queryPage2Result.Entities.Select(e => e.Id);
@@ -139,7 +139,7 @@ namespace Tests.Tests
             await repo.CreateAsync(newMovie);
             await repo.SaveChangesAsync();
 
-            var queryResult = await repo.Query(new MovieQueryRequest(searchPhrase: searchPhrase, from: from, to: to));
+            var queryResult = await repo.Query(new MovieQuery(searchPhrase: searchPhrase, from: from, to: to));
 
             //Assert
             Assert.True(queryResult.Parameters.ContainsKey("SearchPhrase") && queryResult.Parameters.ContainsKey("From") && queryResult.Parameters.ContainsKey("To"));

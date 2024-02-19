@@ -1,5 +1,9 @@
-﻿namespace Api.Services
+﻿namespace Application.Services
 {
+    /// <summary>
+    /// Handles repository interaction and any other business logic related to Movies
+    /// </summary>
+
     public class MovieService : IMovieService
     {
         private readonly IMovieRepository _repo;
@@ -13,7 +17,7 @@
             _cache = cache;
         }
 
-        public async Task<IResult> ListAll()
+        public async Task<IEnumerable<Movie>?> ListAll()
         {
             try
             {
@@ -22,19 +26,19 @@
                 if (!_cache.TryGetValue(cacheKey, out IEnumerable<Movie>? result))
                 {
                     result = await _repo.ListAsync();
-                    _cache.Set(cacheKey, result.OrderByDescending(m => m.CreatedDate));
+                    _cache.Set(cacheKey, result?.OrderByDescending(m => m.CreatedDate));
                 }
 
-                return Results.Ok(result);
+                return result;
             }
             catch (Exception e)
             {
                 _log.LogError(e, e.Message);
-                return Results.Problem();
+                throw;
             }
         }
 
-        public async Task<IResult> Query([AsParameters] MovieQueryRequest query)
+        public async Task<IQueryResult<Movie>?> Query(MovieQuery query)
         {
             try
             {
@@ -46,12 +50,12 @@
                     _cache.Set(cacheKey, result);
                 }
 
-                return Results.Ok(result);
+                return result;
             }
             catch (Exception e)
             {
                 _log.LogError(e, e.Message);
-                return Results.Problem();
+                throw;
             }
         }
     }

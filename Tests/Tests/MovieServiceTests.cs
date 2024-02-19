@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
 using Moq;
+using System.Diagnostics.Contracts;
 using System.Net;
 
 namespace Tests.Tests
@@ -19,27 +20,15 @@ namespace Tests.Tests
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
             var movieService = serviceProvider.GetRequiredService<MovieService>();
 
+            //Act
             await context.AddRangeAsync(movieList);
             await context.SaveChangesAsync();
 
-            //Act
-            //Source: https://stackoverflow.com/questions/71323013/get-a-response-value-out-of-an-iresult-in-asp-nets-minimal-api
-            //According to StackOverflow the simplest way to test the IResult used in Minimal API's is:
-            //1. Create 'mock' HttpContext
-            var httpContext = GetDefaultHttpContext();
-
-            //2. Pass the mock HttpContext to the IResult.ExecuteAsync() method. This will write the response body to the HttpContext.
             var result = await movieService.ListAll();
-            await result.ExecuteAsync(httpContext);
-
-            //3.Read the response from the mock HttpContext and deserialize it into whatever we expect the service to return.
-            httpContext.Response.Body.Position = 0;
-            var jsonOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
-            var responseBody = await JsonSerializer.DeserializeAsync<List<Movie>>(httpContext.Response.Body, jsonOptions);
 
             //Assert
-            Assert.Equal(200, httpContext.Response.StatusCode);
-            Assert.True(responseBody?.Count == movieList.Count);
+            Assert.False(result is null);
+            Assert.True(result.Count() == movieList.Count);
         }
 
         [Fact]
@@ -51,58 +40,14 @@ namespace Tests.Tests
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
             var movieService = serviceProvider.GetRequiredService<MovieService>();
 
+            //Act
             await context.AddRangeAsync(movieList);
             await context.SaveChangesAsync();
-
-            //Act
-            //Source: https://stackoverflow.com/questions/71323013/get-a-response-value-out-of-an-iresult-in-asp-nets-minimal-api
-            //According to StackOverflow the simplest way to test the IResult used in Minimal API's is:
-            //1. Create 'mock' HttpContext
-            var httpContext = GetDefaultHttpContext();
-
-            //2. Pass the mock HttpContext to the IResult.ExecuteAsync() method. This will write the response body to the HttpContext.
-            var result = await movieService.Query(new MovieQueryRequest());
-            await result.ExecuteAsync(httpContext);
-
-            //3.Read the response from the mock HttpContext and deserialize it into whatever we expect the service to return.
-            httpContext.Response.Body.Position = 0;
-            var jsonOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web) { PropertyNameCaseInsensitive = true};
-            var responseBody = await JsonSerializer.DeserializeAsync<GenericQueryResult<Movie>>(httpContext.Response.Body, jsonOptions);
-
+            var result = await movieService.Query(new MovieQuery());
+            
             //Assert
-            Assert.Equal(200, httpContext.Response.StatusCode);
-            Assert.False(responseBody is null);
-            Assert.True(responseBody?.Entities.Count() == movieList.Count);
-        }
-
-        [Fact]
-        public async Task Endpoints_Return_500_On_Exceptions()
-        {
-            //Arrange
-            var serviceProvider = GetServiceCollection().BuildServiceProvider().CreateScope().ServiceProvider;
-            var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
-            var movieService = serviceProvider.GetRequiredService<MovieService>();
-
-            //Act
-            await context.DisposeAsync(); //Dispose context to cause exception
-            var listAllResult = await movieService.ListAll() as IStatusCodeHttpResult;
-            var queryResult = await movieService.Query(new MovieQueryRequest()) as IStatusCodeHttpResult;
-
-            //Assert
-            Assert.Equal(500, listAllResult?.StatusCode);         
-            Assert.Equal(500, queryResult?.StatusCode);         
-        }
-
-        private HttpContext GetDefaultHttpContext()
-        {
-            return new DefaultHttpContext
-            {
-                RequestServices = new ServiceCollection().AddLogging().BuildServiceProvider(),
-                Response =
-                {
-                    Body = new MemoryStream(),
-                },
-            };
+            Assert.False(result is null);
+            Assert.True(result.Entities.Count() == movieList.Count);
         }
 
         private ServiceCollection GetServiceCollection()

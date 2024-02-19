@@ -1,5 +1,13 @@
+using Api.Endpoints;
+using Application.Services;
+using Microsoft.AspNetCore.Mvc;
+
 namespace Api
 {
+    /// <summary>
+    /// Because there are only two endpoints and the requirements for the API itself are fairly straight-forward, we're using a Minimal API.
+    /// Builds a service collection and routes requests to the MovieService via Api.Endpoints.
+    /// </summary>
     public class Program
     {
         public static void Main(string[] args)
@@ -18,9 +26,9 @@ namespace Api
             context.Database.EnsureCreated();
             context.Database.Migrate();
 
-            var movieService = scope.ServiceProvider.GetRequiredService<IMovieService>();
-            app.MapGet("/movies", movieService.ListAll).WithOpenApi();
-            app.MapGet("/movies/query", movieService.Query).WithOpenApi();
+            var movieEndpoints = scope.ServiceProvider.GetRequiredService<MovieEndpoints>();
+            app.MapGet("/movies", async () => await movieEndpoints.ListAll()).WithOpenApi();
+            app.MapGet("/movies/query", async (MovieQuery queryRequest) => await movieEndpoints.Query(queryRequest)).WithOpenApi();
 
             app.Run();
         }
@@ -40,11 +48,11 @@ namespace Api
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite($"Data Source={builder.Configuration["Sqlite3DbPath"]}"));
-
             builder.Services.AddMemoryCache();
 
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddScoped<IMovieService, MovieService>();
+            builder.Services.AddScoped<MovieEndpoints, MovieEndpoints>();
 
             return builder.Build();
         }
