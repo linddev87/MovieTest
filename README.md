@@ -5,14 +5,17 @@ This project is my submission for a test I was given. A new feature is to be add
 - The user should be able to filter the list by title and release year
 - A list of movies to be included in the list is provided in a CSV file once every year. A sample CSV file has been provided.
 
-- 
+
 Solution Structure
 
 The solution structure is inspired by Clean Architecture with the following layers:
 - Domain layer at the center defining the interfaces and core datamodel.
 - Application layer containing services that depend on the domain layer. This layer is where repositories and external services are connected. 
-- Infrastructure layer which implements the persistence-related interfaces 
-
+- Infrastructure layer which implements the persistence-related interfaces defined in the application layer including the EntityFramework DbContext
+- Outer 'Driver' layer containing the following:
+	- A WebApi used for querying the movie database
+	- A Sqlite3 database currently stored on the local machine
+	- A Console App for running the import service
 
 
 Backlog
@@ -22,6 +25,7 @@ Priority:
 	- Does the client interact directly with this API or is there a gateway inbetween?
 	- Which authorization and authentication do we want?
 	- How and where is the relation between user and movie defined?
+	- Which database provider should be used in production?
 
 - Add unit tests:
 	- Application.CsvImportService: Insert new entities and handle exceptions
