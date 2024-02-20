@@ -1,11 +1,15 @@
 # About
 This project is my submission for a test I was given. The solution is not production ready, but you are welcome to find inspiration/clone whatever you can use. 
 
+<br/>
+
 ## Task
 A new feature is to be added to an existing system with many users:
 - Allow users to choose their favorite movie from a list of movies
 - The user should be able to filter the list by title and release year
 - A list of movies to be included in the list is provided in a CSV file once every year. A sample CSV file has been provided.
+
+<br/>
 
 ## Solution Structure
 
@@ -18,6 +22,8 @@ The solution structure is inspired by Clean Architecture with the following laye
 	- A Sqlite3 database currently stored on the local machine
 	- A Console App for running the import service
 
+<br/>
+
 ## Setup on your local machine 
 The the web api and the console app can be run locally after following these steps:
 - Clone the repository to your local machine.
@@ -25,6 +31,8 @@ The the web api and the console app can be run locally after following these ste
 - IMPORTANT: Replace the [PATH-TO-REPOSITORY] placeholders with the path to the repository on your local machine.
 
 A sqlite3 database is included in the /Database folder so the API should be ready to go!
+
+<br/>
 
 ## Backlog
 
