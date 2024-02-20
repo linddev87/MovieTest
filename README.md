@@ -1,12 +1,14 @@
-About
+# About
+This project is my submission for a test I was given. The solution is not production ready, but you are welcome to find inspiration/clone whatever you can use. 
 
-This project is my submission for a test I was given. A new feature is to be added to an existing system with many users:
+## Task
+A new feature is to be added to an existing system with many users:
 - Allow users to choose their favorite movie from a list of movies
 - The user should be able to filter the list by title and release year
 - A list of movies to be included in the list is provided in a CSV file once every year. A sample CSV file has been provided.
 
 
-Solution Structure
+## Solution Structure
 
 The solution structure is inspired by Clean Architecture with the following layers:
 - Domain layer at the center defining the interfaces and core datamodel.
@@ -18,7 +20,7 @@ The solution structure is inspired by Clean Architecture with the following laye
 	- A Console App for running the import service
 
 
-Backlog
+## Backlog
 
 Priority:
 - Integration with existing system:
