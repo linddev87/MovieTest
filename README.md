@@ -7,7 +7,6 @@ A new feature is to be added to an existing system with many users:
 - The user should be able to filter the list by title and release year
 - A list of movies to be included in the list is provided in a CSV file once every year. A sample CSV file has been provided.
 
-
 ## Solution Structure
 
 The solution structure is inspired by Clean Architecture with the following layers:
@@ -19,6 +18,13 @@ The solution structure is inspired by Clean Architecture with the following laye
 	- A Sqlite3 database currently stored on the local machine
 	- A Console App for running the import service
 
+## Setup on your local machine 
+The the web api and the console app can be run locally after following these steps:
+- Clone the repository to your local machine.
+- Create new appsettings.json files in the ConsoleApp and Api projects respectively using the appsettings-template.json files as your base. 
+- IMPORTANT: Replace the [PATH-TO-REPOSITORY] placeholders with the path to the repository on your local machine.
+
+A sqlite3 database is included in the /Database folder so the API should be ready to go!
 
 ## Backlog
 
