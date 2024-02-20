@@ -1,11 +1,4 @@
-﻿using Castle.Core.Logging;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Configuration;
-using Moq;
-using System.Diagnostics.Contracts;
-using System.Net;
+﻿
 
 namespace Tests.Tests
 {

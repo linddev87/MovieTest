@@ -1,9 +1,4 @@
-﻿using Domain.Models;
-using NuGet.Frameworks;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-
-namespace Tests.Tests
+﻿namespace Tests.Tests
 {
     public class MovieRepositoryTests
     {
@@ -142,10 +137,10 @@ namespace Tests.Tests
             var queryResult = await repo.Query(new MovieQuery(searchPhrase: searchPhrase, from: from, to: to));
 
             //Assert
-            Assert.True(queryResult.Parameters.ContainsKey("SearchPhrase") && queryResult.Parameters.ContainsKey("From") && queryResult.Parameters.ContainsKey("To"));
-            Assert.Equal(queryResult.Parameters["SearchPhrase"], searchPhrase);
-            Assert.Equal(queryResult.Parameters["From"], from);
-            Assert.Equal(queryResult.Parameters["To"], to);
+            Assert.True(queryResult.Parameters.ContainsKey("searchPhrase") && queryResult.Parameters.ContainsKey("from") && queryResult.Parameters.ContainsKey("to"));
+            Assert.Equal(queryResult.Parameters["searchPhrase"], searchPhrase);
+            Assert.Equal(queryResult.Parameters["from"], from);
+            Assert.Equal(queryResult.Parameters["to"], to);
         }
 
 

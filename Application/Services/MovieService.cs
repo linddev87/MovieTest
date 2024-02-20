@@ -26,7 +26,7 @@
                 if (!_cache.TryGetValue(cacheKey, out IEnumerable<Movie>? result))
                 {
                     result = await _repo.ListAsync();
-                    _cache.Set(cacheKey, result?.OrderByDescending(m => m.CreatedDate));
+                    _cache.Set(cacheKey, result?.OrderByDescending(m => m.Year));
                 }
 
                 return result;

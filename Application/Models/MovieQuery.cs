@@ -2,7 +2,7 @@
 {
     public class MovieQuery
     {
-        public MovieQuery(int? pageSize, int? pageNumber, string? searchPhrase = null, int? from = null, int? to = null)
+        public MovieQuery(int? pageSize = null, int? pageNumber = null, string? searchPhrase = null, int? from = null, int? to = null)
         {
             From = from;
             To = to;
