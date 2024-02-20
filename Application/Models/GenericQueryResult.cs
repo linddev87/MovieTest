@@ -1,4 +1,4 @@
-﻿namespace Domain.Models
+﻿namespace Application.Models
 {
     public class GenericQueryResult<T> : IQueryResult<T> where T : IEntity
     {

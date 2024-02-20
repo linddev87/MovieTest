@@ -50,7 +50,7 @@
                     _cache.Set(cacheKey, result);
                 }
 
-                return result;
+                return result as GenericQueryResult<Movie>;
             }
             catch (Exception e)
             {

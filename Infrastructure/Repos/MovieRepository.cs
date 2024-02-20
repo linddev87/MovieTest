@@ -19,19 +19,19 @@
             if (req.From is not null)
             {
                 query = query.Where(m => m.Year >= req.From);
-                paramsDict.Add("From", req.From);
+                paramsDict.Add("from", req.From);
             }
 
             if (req.To is not null)
             {
                 query = query.Where(m => m.Year <= req.To);
-                paramsDict.Add("To", req.To);
+                paramsDict.Add("to", req.To);
             }
 
             if (!string.IsNullOrEmpty(req.SearchPhrase))
             {
-                query = query.Where(m => m.TitleToLower.Contains(req.SearchPhrase, StringComparison.InvariantCultureIgnoreCase));
-                paramsDict.Add("SearchPhrase", req.SearchPhrase);
+                query = query.Where(m => m.TitleToLower.Contains(req.SearchPhrase.ToLower()));
+                paramsDict.Add("searchPhrase", req.SearchPhrase);
             }
 
             var resultsCount = query.Count();

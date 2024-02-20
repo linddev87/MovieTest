@@ -1,14 +1,34 @@
-Backlog:
-- Add unit tests:
-	- Application.CsvImportService: Insert new entities and handle exceptions
-	- Application.MovieService: Test caching
-	- Api.Endpoints: Test return types on success and on exception
+About
 
+This project is my submission for a test I was given. A new feature is to be added to an existing system with many users:
+- Allow users to choose their favorite movie from a list of movies
+- The user should be able to filter the list by title and release year
+- A list of movies to be included in the list is provided in a CSV file once every year. A sample CSV file has been provided.
+
+- 
+Solution Structure
+
+The solution structure is inspired by Clean Architecture with the following layers:
+- Domain layer at the center defining the interfaces and core datamodel.
+- Application layer containing services that depend on the domain layer. This layer is where repositories and external services are connected. 
+- Infrastructure layer which implements the persistence-related interfaces 
+
+
+
+Backlog
+
+Priority:
 - Integration with existing system:
 	- Does the client interact directly with this API or is there a gateway inbetween?
 	- Which authorization and authentication do we want?
 	- How and where is the relation between user and movie defined?
 
+- Add unit tests:
+	- Application.CsvImportService: Insert new entities and handle exceptions
+	- Application.MovieService: Test caching
+	- Api.Endpoints: Test return types on success and on exception
+
+Nice-To-Have:
 - Find a better way to import movies in a production scenario
 	- Is once per year really often enough? 
 	- Is there a better data source than a CSV file from an unknown source? (IMDb/TMDb come to mind)

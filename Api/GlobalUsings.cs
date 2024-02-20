@@ -1,6 +1,8 @@
 global using Domain.Entities;
-global using Domain.Interfaces;
-global using Domain.Models;
+global using Api.Endpoints;
+global using Application.Services;
+global using Application.Interfaces;
+global using Application.Models;
 global using Infrastructure;
 global using Infrastructure.Repos;
 global using Microsoft.EntityFrameworkCore;

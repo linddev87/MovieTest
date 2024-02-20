@@ -1,7 +1,3 @@
-using Api.Endpoints;
-using Application.Services;
-using Microsoft.AspNetCore.Mvc;
-
 namespace Api
 {
     /// <summary>
@@ -28,7 +24,8 @@ namespace Api
 
             var movieEndpoints = scope.ServiceProvider.GetRequiredService<MovieEndpoints>();
             app.MapGet("/movies", async () => await movieEndpoints.ListAll()).WithOpenApi();
-            app.MapGet("/movies/query", async (MovieQuery queryRequest) => await movieEndpoints.Query(queryRequest)).WithOpenApi();
+            app.MapGet("/movies/query", (Delegate)movieEndpoints.Query).WithOpenApi();
+            //app.MapGet("/movies/query", async (int? pageSize, int? pageNumber, string? searchPhrase, int? from, int? to) => await movieEndpoints.Query(new MovieQuery(pageSize: pageSize, pageNumber: pageNumber, searchPhrase: searchPhrase, from: from, to: to))).WithOpenApi();
 
             app.Run();
         }

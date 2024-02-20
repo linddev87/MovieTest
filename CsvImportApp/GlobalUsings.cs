@@ -1,7 +1,7 @@
 global using Application.Models;
 global using Application.Services;
+global using Application.Interfaces;
 global using Domain.Entities;
-global using Domain.Interfaces;
 global using Infrastructure;
 global using Infrastructure.Repos;
 global using Infrastructure.Services;
