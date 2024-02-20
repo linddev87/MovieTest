@@ -46,7 +46,7 @@
 
             var pageCount = (int)Math.Ceiling((decimal)resultsCount / (decimal)req.PageSize);
 
-            //return paginated result
+            //Return paginated result
             return new GenericQueryResult<Movie>(
                 entityCount: resultsCount,
                 pageCount: pageCount,

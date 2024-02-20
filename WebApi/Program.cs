@@ -17,10 +17,7 @@ namespace WebApi
             builder.Configuration.AddJsonFile("appsettings.json", false, true);
 
             builder.Logging.ClearProviders();
-            var logger = new LoggerConfiguration()
-               .WriteTo.File($"{Directory.GetCurrentDirectory()}/logging/log.log", Serilog.Events.LogEventLevel.Warning)
-               .CreateLogger();
-            builder.Host.UseSerilog(logger);
+            builder.Host.UseSerilog(new LoggerConfiguration().WriteTo.File($"{Directory.GetCurrentDirectory()}/logging/log.log", Serilog.Events.LogEventLevel.Warning).CreateLogger());
 
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite($"Data Source={builder.Configuration["Sqlite3DbPath"]}"));
             builder.Services.AddControllers();
@@ -40,12 +37,8 @@ namespace WebApi
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.Run();
         }
     }
